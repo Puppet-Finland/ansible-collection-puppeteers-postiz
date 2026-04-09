@@ -82,7 +82,7 @@
 
 - name: Synchronize quadlets from the repo to the quadlet directory
   ansible.builtin.command:
-    cmd: "rsync --recursive --include='*.container' --include='*.volume' --include='*.network' --exclude='*' {{ puppeteers_postiz_system_user_home }}/postiz-podman-quadlets/ /etc/containers/systemd/users/{{ postiz_uid }}/"
+    cmd: "rsync --chown=root:{{ puppeteers_postiz_system_user }} --recursive --include='*.container' --include='*.volume' --include='*.network' --exclude='*' {{ puppeteers_postiz_system_user_home }}/postiz-podman-quadlets/ /etc/containers/systemd/users/{{ postiz_uid }}/"
 
 - name: Populate container environment files
   ansible.builtin.template:
