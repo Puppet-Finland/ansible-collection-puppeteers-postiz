@@ -1,0 +1,3 @@
+- name: refresh unit file list for postiz user
+  ansible.builtin.command:
+    cmd: "systemctl --user -M {{ puppeteers_postiz_system_user }}@ daemon-reload"

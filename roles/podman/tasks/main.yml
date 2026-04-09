@@ -101,6 +101,7 @@
     - temporal-ui
   loop_control:
     loop_var: postiz_env_file
+  notify: refresh unit file list for postiz user
 
 - name: Create volumes
   containers.podman.podman_volume:
