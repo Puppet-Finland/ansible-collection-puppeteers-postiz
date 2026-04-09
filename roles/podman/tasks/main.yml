@@ -60,6 +60,13 @@
     name: acl
     state: present
 
+- name: Download container images from Docker Hub by default to avoid interactive prompts
+  ansible.builtin.lineinfile:
+    state: present
+    regexp: "^unqualified-search-registries = "
+    line: "unqualified-search-registries = [\"docker.io\"]"
+    path: /etc/containers/registries.conf
+
 - name: Get postiz-podman-quadlets repository
   ansible.builtin.git:
     repo: "{{ puppeteers_postiz_podman_quadlets_repo }}"
