@@ -8,3 +8,10 @@
     state: restarted
   become: true
   become_user: "{{ puppeteers_postiz_system_user }}"
+
+- name: restart temporal unit
+  ansible.builtin.service:
+    name: temporal
+    state: restarted
+  become: true
+  become_user: "{{ puppeteers_postiz_system_user }}"

@@ -165,3 +165,5 @@
     owner: "{{ puppeteers_postiz_system_user }}"
     group: "{{ puppeteers_postiz_system_user }}"
     mode: "0644"
+  notify:
+    - restart temporal unit
