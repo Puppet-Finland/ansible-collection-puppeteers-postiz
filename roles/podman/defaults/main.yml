@@ -10,4 +10,5 @@ puppeteers_postiz_temporal_postgresql_user: temporal
 puppeteers_postiz_main_url: "http://localhost:4007"
 puppeteers_postiz_frontend_url: "http://localhost:4007"
 puppeteers_postiz_next_public_backend_url: "http://localhost:4007/api"
+puppeteers_postiz_backend_internal_url: "http://postiz-app:3000"
 puppeteers_postiz_disable_registration: true
