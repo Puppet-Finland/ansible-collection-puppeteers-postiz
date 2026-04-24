@@ -3,15 +3,9 @@
     cmd: "systemctl --user -M {{ puppeteers_postiz_system_user }}@ daemon-reload"
 
 - name: restart postiz unit
-  ansible.builtin.service:
-    name: postiz
-    state: restarted
-  become: true
-  become_user: "{{ puppeteers_postiz_system_user }}"
+  ansible.builtin.command:
+    cmd: "systemctl --user -M {{ puppeteers_postiz_system_user }}@ restart postiz"
 
 - name: restart temporal unit
-  ansible.builtin.service:
-    name: temporal
-    state: restarted
-  become: true
-  become_user: "{{ puppeteers_postiz_system_user }}"
+  ansible.builtin.command:
+    cmd: "systemctl --user -M {{ puppeteers_postiz_system_user }}@ restart temporal"
