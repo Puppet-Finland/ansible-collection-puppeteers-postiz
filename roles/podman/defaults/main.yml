@@ -1,3 +1,4 @@
+# Generic settings
 puppeteers_postiz_system_user: postiz
 puppeteers_postiz_system_user_home: /home/postiz
 puppeteers_postiz_ssh_authorized_key: ''
@@ -12,3 +13,9 @@ puppeteers_postiz_frontend_url: "http://localhost:4007"
 puppeteers_postiz_next_public_backend_url: "http://localhost:4007/api"
 puppeteers_postiz_backend_internal_url: "http://postiz-app:3000"
 puppeteers_postiz_disable_registration: true
+
+# Firewalld settings
+puppeteers_postiz_manage_https_proxy: false
+puppeteers_postiz_unprivileged_https_port: 8443
+puppeteers_postiz_manage_firewalld: false
+puppeteers_postiz_firewalld_zone: internal

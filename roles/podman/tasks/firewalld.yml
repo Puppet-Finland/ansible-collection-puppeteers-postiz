@@ -1,0 +1,18 @@
+- name: Allow HTTPS
+  ansible.posix.firewalld:
+    service: https
+    zone: "{{ puppeteers_postiz_firewalld_zone }}"
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Port forward
+  ansible.posix.firewalld:
+    zone: "{{ puppeteers_postiz_firewalld_zone }}"
+    port_forward:
+      - port: 443
+        toport: "{{ puppeteers_postiz_unprivileged_https_port }}"
+        proto: tcp
+    permanent: true
+    immediate: true
+    state: enabled

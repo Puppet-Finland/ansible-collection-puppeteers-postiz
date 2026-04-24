@@ -19,6 +19,10 @@
       - puppeteers_postiz_backend_internal_url is string
       - puppeteers_postiz_jwt_secret is defined
       - puppeteers_postiz_disable_registration is boolean
+      - puppeteers_postiz_manage_https_proxy is boolean
+      - puppeteers_postiz_unprivileged_https_port is number
+      - puppeteers_postiz_manage_firewalld is boolean
+      - puppeteers_postiz_firewalld_zone is string
 
 - name: Create system user for postiz
   ansible.builtin.user:
@@ -168,3 +172,11 @@
     mode: "0644"
   notify:
     - restart temporal unit
+
+- name: Manage firewalld rules, including port forwarding
+  ansible.builtin.import_tasks: firewalld.yml
+  when: puppeteers_postiz_manage_firewalld
+
+- name: Manage nginx HTTPS proxy
+  ansible.builtin.import_tasks: https_proxy.yml
+  when: puppeteers_postiz_manage_https_proxy

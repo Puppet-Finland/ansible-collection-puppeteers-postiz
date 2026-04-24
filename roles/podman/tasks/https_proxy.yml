@@ -1,0 +1,4 @@
+---
+- name: Configure HTTPS proxy
+  ansible.builtin.debug:
+    msg: "Would configure Postiz HTTPS proxy"
