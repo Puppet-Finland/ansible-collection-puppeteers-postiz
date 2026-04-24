@@ -16,6 +16,7 @@
       - puppeteers_postiz_main_url is string
       - puppeteers_postiz_frontend_url is string
       - puppeteers_postiz_next_public_backend_url is string
+      - puppeteers_postiz_backend_internal_url is string
       - puppeteers_postiz_jwt_secret is defined
       - puppeteers_postiz_disable_registration is boolean
 
