@@ -1,4 +1,22 @@
 ---
-- name: Configure HTTPS proxy
-  ansible.builtin.debug:
-    msg: "Would configure Postiz HTTPS proxy"
+- name: Validate HTTPS proxy parameters
+  ansible.builtin.assert:
+    that:
+      - puppeteers_postiz_server_name is string
+      - puppeteers_postiz_ssl_certificate_path is string
+      - puppeteers_postiz_ssl_certificate_key_path is string
+
+- name: Synchronize postiz-https-proxy unit files
+  ansible.builtin.command:
+    cmd: "rsync --chown=root:{{ puppeteers_postiz_system_user }} --recursive --include='*.container' --include='*.build' --exclude='*' {{ puppeteers_postiz_system_user_home }}/postiz-podman-quadlets/postiz-https-proxy/quadlets/ /etc/containers/systemd/users/{{ postiz_uid }}/"
+
+- name: Create postiz-https-proxy environment file
+  ansible.builtin.template:
+    src: "postiz-https-proxy.env.j2"
+    dest: "/etc/containers/systemd/users/{{ postiz_uid }}/postiz-https-proxy.env"
+    owner: root
+    group: "{{ puppeteers_postiz_system_user }}"
+    mode: "0640"
+  notify:
+    - refresh unit file list for postiz user
+    - restart postiz https proxy unit

@@ -77,6 +77,7 @@
     repo: "{{ puppeteers_postiz_podman_quadlets_repo }}"
     version: "{{ puppeteers_postiz_podman_quadlets_repo_version }}"
     dest: "{{ puppeteers_postiz_system_user_home }}/postiz-podman-quadlets"
+    update: true
 
 - name: Get the uid for the postiz user
   ansible.builtin.command:

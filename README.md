@@ -29,14 +29,41 @@ The SSH authorized key is not absolutely necessary, but it will be way easier
 to debug and fix things if you have direct access to the Postiz host as the
 user postiz containers run as (default: postiz).
 
+By default this role should configure postiz correctly for access through
+localhost (e.g. SSH tunnel). Due to cookie security trying to access it through
+a proper DNS name and unencrypted HTTP connection will silently fail. For
+proper production access you need to configure a HTTPS proxy (see below).
+
 See [roles/podman/defaults/main.yml](roles/podman/defaults/main.yml) for
 details on all the variables you can configure.
 
-**NOTE 1:** currently this role only allows logging in to Postiz running on the
-localhost or used through an SSH tunnel to the Postiz server. This is due to
-lack of HTTPS access, which makes Postiz reject the authentication cookie if
-the connecting host is other than localhost. This is the same limitation as
-with the official docker-compose.yml file and will be fixed later.
-
-**NOTE 2:** you will probably need to restart postiz.service after this role
+**NOTE:** you will probably need to restart postiz.service after this role
 has run. This may be an ordering / timing issue in the units.
+
+### Optional: configure HTTPS proxy and firewalld rules
+
+This role can setup up a HTTPS proxy in front of postiz using an nginx
+container. The relevant parameters are:
+
+    puppeteers_postiz_manage_https_proxy: true
+    puppeteers_postiz_server_name: postiz.example.com
+    puppeteers_postiz_ssl_certificate_path: /etc/letsencrypt/live/postiz.example.com/fullchain.pem
+    puppeteers_postiz_ssl_certificate_key_path: /etc/letsencrypt/live/postiz.example.com/privkey.pem
+
+The certificate paths must be present *inside* the nginx container. In fact,
+the postiz-https-proxy container mounts ~/.local/share/letsencrypt as a volume.
+If that directory is missing, then starting the HTTPS proxy will fail.
+
+**NOTE:** there is no support for automatically refreshing the certificates the
+HTTPS proxy uses or restarting it afterwards. That part you need to configure
+separately.
+
+The HTTPS proxy container exposes its TCP port 443 on port 8443 on the
+container host. This is necessary because binding directly to port 443 as an
+unprivileged user (e.g. postiz) is not possible. The optional firewalld setup
+in this role can handle redirecting traffic coming to the container host TCP
+port 443 to container port 8443. Example usage:
+
+    puppeteers_postiz_manage_firewalld: true
+    puppeteers_postiz_firewalld_zone: internal
+    puppeteers_postiz_unprivileged_https_port: 8443
