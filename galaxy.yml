@@ -41,7 +41,7 @@ tags: []
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
 dependencies:
-  puppeteers.users: '>= 1.1.0'
+  puppeteers.users: '>= 1.2.0'
 
 # The URL of the originating SCM repository
 repository: https://github.com/Puppet-Finland/ansible-collection-postiz
