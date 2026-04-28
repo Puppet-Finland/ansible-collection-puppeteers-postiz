@@ -3,7 +3,7 @@ puppeteers_postiz_system_user: postiz
 puppeteers_postiz_system_user_home: /home/postiz
 puppeteers_postiz_ssh_authorized_key: ''
 puppeteers_postiz_podman_quadlets_repo: 'https://github.com/Puppet-Finland/postiz-podman-quadlets.git'
-puppeteers_postiz_podman_quadlets_repo_version: main
+puppeteers_postiz_podman_quadlets_repo_version: 0.2.0
 puppeteers_postiz_postiz_postgresql_user: postiz-user
 puppeteers_postiz_postiz_postgresql_db: postiz-db-local
 puppeteers_postiz_temporal_cors_origins: "http://localhost:3000"
