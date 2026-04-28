@@ -24,33 +24,14 @@
       - puppeteers_postiz_manage_firewalld is boolean
       - puppeteers_postiz_firewalld_zone is string
 
-- name: Create system user for postiz
-  ansible.builtin.user:
-    state: present
-    name: "{{ puppeteers_postiz_system_user }}"
-    comment: User for running postiz in rootless podman containers
-    create_home: true
-
-- name: Create .ssh directory for postiz user
-  ansible.builtin.file:
-    state: directory
-    path: "{{ puppeteers_postiz_system_user_home }}/.ssh"
-    owner: "{{ puppeteers_postiz_system_user }}"
-    group: "{{ puppeteers_postiz_system_user }}"
-    mode: "0700"
-
-- name: Add authorized key for postiz user
-  ansible.builtin.copy:
-    content: "{{ puppeteers_postiz_ssh_authorized_key }}\n"
-    dest: "{{ puppeteers_postiz_system_user_home }}/.ssh/authorized_keys" 
-    owner: "{{ puppeteers_postiz_system_user }}"
-    group: "{{ puppeteers_postiz_system_user }}"
-    mode: "0600"
-  when: puppeteers_postiz_ssh_authorized_key | length > 0
-
-- name: Enable lingering for postiz user
-  ansible.builtin.command:
-    cmd: "loginctl enable-linger {{ puppeteers_postiz_system_user }}"
+- name: Create unprivileged system user for postiz
+  ansible.builtin.import_role:
+    name: puppeteers.users.unprivileged_user
+  vars:
+    puppeteers_users_unprivileged_user_name: "{{ puppeteers_postiz_system_user }}"
+    puppeteers_users_unprivileged_user_comment: "Unprivileged user created for running postiz"
+    puppeteers_users_unprivileged_user_home: "{{ puppeteers_postiz_system_user_home }}"
+    puppeteers_users_unprivileged_user_ssh_authorized_key: "{{ puppeteers_postiz_ssh_authorized_key }}"
 
 - name: Ensure that prerequisites are installed
   ansible.builtin.package:
