@@ -9,7 +9,7 @@ namespace: puppeteers
 name: postiz
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.3.0
+version: 0.4.0
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -40,7 +40,8 @@ tags: []
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {}
+dependencies:
+  puppeteers.users: '>= 1.1.0'
 
 # The URL of the originating SCM repository
 repository: https://github.com/Puppet-Finland/ansible-collection-postiz
